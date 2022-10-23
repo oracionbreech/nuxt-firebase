@@ -1,5 +1,10 @@
 # mamamia-dev-test
 
+## Environment Setup
+
+Duplicate the `.env.example` file and rename the duplication to `.env` and fill out the field needed.
+
+
 ## Build Setup
 
 ```bash

@@ -7,27 +7,23 @@ import * as cors from "cors";
 
 admin.initializeApp();
 
-export const getSavage = https.onRequest((request, response) => {
-  logger.info("Hello logs!", {structuredData: true});
-  response.status(200).json({
-    message: "Hello",
-  });
-});
-
-export const helloWorld = https.onRequest((request, response) => {
-  logger.info("Hello logs!", {structuredData: true});
-  response.status(200).json({
-    message: "Hello",
-  });
-});
-
 export const saveText = https.onRequest(async (req, res) => {
   try {
     if (req.headers["content-type"]) {
       logger.info(req.body.data, {structuredClone: true});
 
+
+      if (!req.body.data || !req.body.data.text) {
+        return cors()(req, res, async () => res.send({
+          status: "failed",
+          data: "Text should not be empty!",
+        }));
+      }
+
+
       const newText = await admin.firestore().collection("texts").add({
         text: req.body.data.text,
+        date: new Date().valueOf(),
       });
 
       // eslint-disable-next-line max-len
